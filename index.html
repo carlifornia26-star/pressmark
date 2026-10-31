@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pressmark - the printing press for the web</title>
+<meta name="description" content="An experiment in final editions: write it, seal it, correct it only by visible errata.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="masthead" href="index.html">Pressmark<small>the printing press for the web</small></a>
+  <nav class="main">
+    <a href="write.html">Write</a><a href="library.html">Library</a><a href="edition.html?id=sample">Demo edition</a><a href="about.html">Why</a>
+  </nav>
+</div></header>
+<main><div class="wrap">
+  <section class="hero">
+    <h1>Write it. Seal it.<br>It stays finished.</h1>
+    <p class="sub">Online articles can change after you read them, often without saying so - and AI made content endless. Pressmark is an experiment in the opposite: editions that get a number, a date and a seal - and are corrected only in the open, by errata.</p>
+    <div class="row" style="justify-content:center">
+      <a class="btn" href="write.html">Print an edition</a>
+      <a class="btn secondary" href="edition.html?id=sample">Read the demo edition</a>
+    </div>
+  </section>
+  <h2 class="section">How the press works</h2>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><p><strong>Write.</strong> Say the thing once, properly. A title and a body, like a page of a magazine.</p></div>
+    <div class="step"><div class="num">2</div><p><strong>Print.</strong> Your edition gets a number, a date, and a seal - a cryptographic fingerprint of its exact words, computed in your browser.</p></div>
+    <div class="step"><div class="num">3</div><p><strong>Correct in the open.</strong> A printed edition is not rewritten. If it was wrong, you add an erratum - dated and visible - under the original text.</p></div>
+  </div>
+  <h2 class="section">An honest experiment</h2>
+  <div class="notice">
+    This is an <strong>experimental demo</strong>. Editions you print are stored only in this browser, on this device - no accounts, no uploads, no tracking. The seal lets you check whether a copy still matches the words that were sealed. It does not prove who wrote an edition or when, and it cannot stop deletion or replacement of a local copy. Finality here is a habit worth testing, not a technical guarantee.
+  </div>
+  <p>Scholarship already works this way - journals use versioned records and Crossmark updates, arXiv keeps every version, and a sent email can never be edited. The open question Pressmark tests: do writers and readers want that same feeling of <em>finished</em> on the everyday web?</p>
+</div></main>
+<footer class="site"><div class="wrap">
+  Pressmark · an experimental demo · editions stay in this browser unless you export them · browser data can be lost · no analytics · <a href="about.html">why finality?</a>
+</div></footer>
+<script src="assets/app.js"></script>
+</body>
+</html>
