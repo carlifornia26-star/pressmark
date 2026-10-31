@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://pressmark.pages.dev/sitemap.xml
+Sitemap: https://pressmark-demo.pages.dev/sitemap.xml
