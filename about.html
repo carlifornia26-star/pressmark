@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why finality - Pressmark</title>
+<meta name="description" content="The problem Pressmark tests: the web lost finished things.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="masthead" href="index.html">Pressmark<small>the printing press for the web</small></a>
+  <nav class="main">
+    <a href="write.html">Write</a><a href="library.html">Library</a><a href="edition.html?id=sample">Demo edition</a><a href="about.html">Why</a>
+  </nav>
+</div></header>
+<main><div class="wrap">
+  <h1>Why finality?</h1>
+  <h2 class="section">The friction</h2>
+  <p>Two things happened to reading. First, much of it became editable: articles can change after they are quoted, pages can be silently updated, and often you cannot be sure the words you read yesterday are the words someone else reads today. Then AI made content infinite. The result is a web where nothing is ever finished, and finishing is the one thing attention actually wants.</p>
+  <h2 class="section">The shift</h2>
+  <p>When generating text is free, commitment becomes the scarce thing. A numbered, dated, sealed edition is a small act of commitment: this is what I said, on this date, and if I was wrong you will see the correction, not a rewritten past.</p>
+  <h2 class="section">The concept</h2>
+  <p>A printing press for the web. Not a blog (editable), not a feed (endless), not a blockchain (permanent in the wrong way). Editions, errata, done. The first thousand users would be the writers who already feel this: newsletter authors tired of infinite drafts, essayists who want their work to have a spine, readers who want to finish something and shelve it.</p>
+  <h2 class="section">What this demo can and cannot claim</h2>
+  <p>This demo stores editions in your own browser and seals them with a digest you can verify. It cannot enforce immutability, prove authorship or date, or survive a cleared browser. The full concept would need hosted, timestamped, append-only storage to make seals meaningful across devices - that is deliberately out of scope for this experiment.</p>
+  <p>Prior art is real: scholarly publishing has versioned records (Crossref versioning, Crossmark), arXiv keeps all versions public, perma.cc freezes citations, and a sent email newsletter is already uneditable. What we did not find among checked players: a consumer web platform that treats sealed editions and open errata as the core ritual rather than an archive feature.</p>
+</div></main>
+<footer class="site"><div class="wrap">
+  Pressmark · an experimental demo · editions stay in this browser unless you export them · browser data can be lost · no analytics
+</div></footer>
+<script src="assets/app.js"></script>
+</body>
+</html>
