@@ -95,6 +95,54 @@
       a.click();
       URL.revokeObjectURL(a.href);
     });
+    var importBtn = document.getElementById('import-btn');
+    var importFile = document.getElementById('import-file');
+    var importResult = document.getElementById('import-result');
+    if (importBtn && importFile) importBtn.addEventListener('click', function () { importFile.click(); });
+    if (importFile) importFile.addEventListener('change', function () {
+      var f = importFile.files && importFile.files[0];
+      if (!f) return;
+      var reader = new FileReader();
+      reader.onload = function () {
+        importResult.textContent = '';
+        var data;
+        try { data = JSON.parse(reader.result); }
+        catch (err) { importResult.textContent = 'That file is not valid JSON. Nothing was imported.'; return; }
+        var items = Array.isArray(data) ? data : [data];
+        var existing = loadEditions();
+        var maxNum = existing.length ? Math.max.apply(null, existing.map(function (x) { return x.number; })) : 0;
+        var added = 0, dup = 0, bad = 0, mismatched = 0;
+        var chain = Promise.resolve();
+        items.forEach(function (it) {
+          chain = chain.then(function () {
+            if (!it || typeof it.title !== 'string' || typeof it.body !== 'string' ||
+                typeof it.seal !== 'string' || !/^[0-9a-f]{64}$/.test(it.seal) || !it.date) { bad++; return; }
+            return sha256(canonical(it.title, it.body)).then(function (h) {
+              if (h !== it.seal) { mismatched++; return; }
+              if (existing.some(function (x) { return x.seal === it.seal; })) { dup++; return; }
+              var errata = Array.isArray(it.errata) ? it.errata.filter(function (x) {
+                return x && typeof x.text === 'string' && x.date;
+              }) : [];
+              existing.push({ number: ++maxNum, title: it.title, body: it.body, date: it.date, seal: it.seal, errata: errata });
+              added++;
+            });
+          });
+        });
+        chain.then(function () {
+          saveEditions(existing);
+          var parts = [];
+          if (added) parts.push(added + ' edition' + (added === 1 ? '' : 's') + ' imported');
+          if (dup) parts.push(dup + ' already in this library');
+          if (mismatched) parts.push(mismatched + ' refused: the words do not match their seal');
+          if (bad) parts.push(bad + ' skipped: not a Pressmark edition file');
+          importResult.textContent = (parts.join(' \u00b7 ') || 'Nothing importable found in that file.') +
+            (added ? '. A seal match means the words match what was sealed in the file - it says nothing about who wrote them.' : '');
+          if (added) setTimeout(function () { location.reload(); }, 1800);
+        });
+      };
+      reader.readAsText(f);
+      importFile.value = '';
+    });
   }
 
   /* ---------- edition.html ---------- */
@@ -139,7 +187,8 @@
         '<label class="f" for="err-text">Add an erratum</label>' +
         '<textarea id="err-text" style="min-height:90px" placeholder="What did the edition get wrong, and when did you learn it?"></textarea>' +
         '<div class="row"><button class="btn secondary" id="add-erratum">Add erratum</button>' +
-        '<button class="btn secondary" id="verify-seal">Verify this copy against its seal</button></div>');
+        '<button class="btn secondary" id="verify-seal">Verify this copy against its seal</button>' +
+        '<button class="btn secondary" id="export-edition">Export this edition</button></div>');
       var vb = document.getElementById('verify-seal');
       if (vb) vb.addEventListener('click', function () {
         sha256(canonical(e.title, e.body)).then(function (h) {
@@ -147,6 +196,15 @@
             ? 'Checked: this copy matches its seal.'
             : 'Warning: this copy does NOT match its seal.';
         });
+      });
+      var exb = document.getElementById('export-edition');
+      if (exb) exb.addEventListener('click', function () {
+        var blob = new Blob([JSON.stringify(e, null, 2)], { type: 'application/json' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'pressmark-edition-' + e.seal.slice(0, 8) + '.json';
+        a.click();
+        URL.revokeObjectURL(a.href);
       });
       var ab = document.getElementById('add-erratum');
       if (ab) ab.addEventListener('click', function () {
